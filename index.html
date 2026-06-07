@@ -209,6 +209,7 @@
         ข้อใดเป็นอำนาจในการปฏิบัติการที่ท่านปฏิบัติได้
         ตามพระราชบัญญัติยา พ.ศ. 2510 (ตอบได้มากกว่า 1 ข้อ)
       </label>
+      <img class="question-img" src="https://raw.githubusercontent.com/Samart-Jamrat/post_fda_quiz0910/main/images/fdaq2.jpg" alt="อำนาจตามพระราชบัญญัติยา">
 
       <div id="authorityPowers"></div>
 
@@ -261,6 +262,7 @@
       {
         id: "q2",
         text: "ในการปฏิบัติงานเฝ้าระวังเชิงรุกและใช้เทคโนโลยีในการตรวจผลิตภัณฑ์ที่ปลอมปนสเตียรอยด์ ยาไม่มีทะเบียน ยาปลอม เป็นการปฏิบัติงานตามหัวข้อใดใน WHO GSMS",
+        image: IMG_Q3,
         options: [
           "การตรวจหา (Detection)",
           "การตอบสนอง (Response)",
@@ -271,6 +273,7 @@
       {
         id: "q3",
         text: "ในการปฏิบัติงานหลังจากที่ตรวจพบปัญหา ร่วมกับการประสานงานกับหน่วยงานที่เกี่ยวข้อง เพื่อให้การจัดการปัญหาดังกล่าวมีประสิทธิภาพสูงสุด เป็นการปฏิบัติงานตามหัวข้อใดใน WHO GSMS",
+        image: IMG_Q3,
         options: [
           "การตรวจหา (Detection)",
           "การตอบสนอง (Response)",
@@ -281,6 +284,7 @@
       {
         id: "q4",
         text: "ในการปฏิบัติงานสร้างความตระหนัก และเพิ่มการเข้าถึงยาคุณภาพ เป็นการปฏิบัติงานตามหัวข้อใดใน WHO GSMS",
+        image: IMG_Q3,
         options: [
           "การตรวจหา (Detection)",
           "การตอบสนอง (Response)",
@@ -353,6 +357,10 @@
         div.className = "question";
 
         let html = `<h3>ข้อ ${index + 1}</h3><p>${escapeHtml(q.text)}</p>`;
+
+        if (q.image) {
+          html += `<img class="question-img" src="${q.image}" alt="รูปประกอบคำถาม">`;
+        }
 
         q.options.forEach(opt => {
           html += `
@@ -444,43 +452,24 @@
       const result = document.getElementById("resultSection");
       result.classList.remove("hidden");
       result.className = "card " + (passed ? "result-pass" : "result-fail");
-
-      let html = `
+    
+      const html = `
         <h2>ผลคะแนน</h2>
         <h1>${score} / ${total} คะแนน (${percent}%)</h1>
         <h2>${passed ? "ผ่านเกณฑ์" : "ยังไม่ผ่านเกณฑ์"}</h2>
         <p>ระบบได้ส่งข้อมูลไปบันทึกใน Google Sheet แล้ว</p>
-        <h3>ตรวจคำตอบ</h3>
-      `;
-
-      QUESTIONS.forEach((q, index) => {
-        const isCorrect = answers[q.id] === q.answer;
-        html += `
-          <div class="feedback-item ${isCorrect ? "correct" : "wrong"}">
-            <strong>ข้อ ${index + 1}: ${isCorrect ? "ถูก" : "ผิด"}</strong><br>
-            คำตอบของท่าน: ${escapeHtml(answers[q.id])}<br>
-            ${isCorrect ? "" : "คำตอบที่ถูกต้อง: " + escapeHtml(q.answer)}
-          </div>
-        `;
-      });
-
-      html += `
+    
         <button class="btn-primary" onclick="retryQuiz()">ทำข้อสอบใหม่</button>
         <button class="btn-secondary" onclick="editInfo()">แก้ไขข้อมูลผู้ทำ</button>
       `;
-
+    
       result.innerHTML = html;
       result.scrollIntoView({ behavior: "smooth" });
     }
 
     function retryQuiz() {
-      QUESTIONS.forEach(q => {
-        document.querySelectorAll(`input[name="${q.id}"]`).forEach(el => {
-          el.checked = false;
-        });
-      });
-
       document.getElementById("resultSection").classList.add("hidden");
+      document.getElementById("quizSection").classList.remove("hidden");
       document.getElementById("quizSection").scrollIntoView({ behavior: "smooth" });
     }
 

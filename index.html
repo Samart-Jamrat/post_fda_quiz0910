@@ -195,7 +195,7 @@
         จากการแต่งตั้งพนักงานเจ้าหน้าที่เพื่อปฏิบัติการ
         ดังประกาศกระทรวงสาธารณสุข พ.ศ.2568 หรือไม่
       </label>
-      <img class="question-img" src="https://raw.githubusercontent.com/Samart-Jamrat/post_fda_quiz0910/main/images/fdaq1.jpg" alt="มาตรา 91">
+      <img class="question-img" src="images/fdaq1.jpg?v=20260607b" alt="มาตรา 91" onerror="this.style.display='none'; console.warn('Image not found:', this.src);">
       <label class="option">
         <input type="radio" name="isAuthority" value="ใช่" />
         ใช่
@@ -209,7 +209,7 @@
         ข้อใดเป็นอำนาจในการปฏิบัติการที่ท่านปฏิบัติได้
         ตามพระราชบัญญัติยา พ.ศ. 2510 (ตอบได้มากกว่า 1 ข้อ)
       </label>
-      <img class="question-img" src="https://raw.githubusercontent.com/Samart-Jamrat/post_fda_quiz0910/main/images/fdaq2.jpg" alt="อำนาจตามพระราชบัญญัติยา">
+      <img class="question-img" src="images/fdaq2.jpg?v=20260607b" alt="อำนาจตามพระราชบัญญัติยา" onerror="this.style.display='none'; console.warn('Image not found:', this.src);">
 
       <div id="authorityPowers"></div>
 
@@ -232,9 +232,28 @@
 
   <script>
     const GAS_URL = "https://script.google.com/macros/s/AKfycbyWqCO2_s5C7ZeTqcw7dZ1MN7J4KQF11N4uLe4-bHqK9HDXhRl96ajG35Y0WHp0441uUA/exec";
-    const IMG_Q1 = "https://raw.githubusercontent.com/Samart-Jamrat/post_fda_quiz0910/main/images/fdaq1.jpg";
-    const IMG_Q2 = "https://raw.githubusercontent.com/Samart-Jamrat/post_fda_quiz0910/main/images/fdaq2.jpg";
-    const IMG_Q3 = "https://raw.githubusercontent.com/Samart-Jamrat/post_fda_quiz0910/main/images/fdaq3.jpg";
+    const IMG_Q1 = "images/fdaq1.jpg?v=20260607b";
+    const IMG_Q2 = "images/fdaq2.jpg?v=20260607b";
+    const IMG_Q3 = "images/fdaq3.png?v=20260607b";
+
+    let lastAnswers = {};
+
+    function imageHtml(src, altText) {
+      return `<img class="question-img" src="${src}" alt="${escapeHtml(altText)}" onerror="this.style.display='none'; console.warn('Image not found:', this.src);">`;
+    }
+
+    function restoreAnswers(answers) {
+      Object.keys(answers || {}).forEach(qid => {
+        const value = cssEscapeValue(answers[qid]);
+        const el = document.querySelector(`input[name="${qid}"][value="${value}"]`);
+        if (el) el.checked = true;
+      });
+    }
+
+    function cssEscapeValue(value) {
+      return String(value || "").replace(/\\/g, "\\\\").replace(/"/g, '\\"');
+    }
+
 
     const AUTHORITY_POWERS = [
       "เข้าไปในสถานที่ผลิตยา สถานที่ขายยา สถานที่นำหรือสั่งยาเข้ามาในราชอาณาจักร หรือสถานที่เก็บยา ในระหว่างเวลาทำการเพื่อตรวจสอบและควบคุม",
@@ -359,7 +378,7 @@
         let html = `<h3>ข้อ ${index + 1}</h3><p>${escapeHtml(q.text)}</p>`;
 
         if (q.image) {
-          html += `<img class="question-img" src="${q.image}" alt="รูปประกอบคำถาม">`;
+          html += imageHtml(q.image, "รูปประกอบคำถาม");
         }
 
         q.options.forEach(opt => {
@@ -433,6 +452,7 @@
       const total = QUESTIONS.length;
       const percent = Math.round((score / total) * 10000) / 100;
       const passed = percent >= 70;
+      lastAnswers = { ...answers };
 
       showResult(score, total, percent, passed, answers);
 
@@ -450,19 +470,22 @@
 
     function showResult(score, total, percent, passed, answers) {
       const result = document.getElementById("resultSection");
+      const quizSection = document.getElementById("quizSection");
+
+      quizSection.classList.add("hidden");
       result.classList.remove("hidden");
       result.className = "card " + (passed ? "result-pass" : "result-fail");
-    
+
       const html = `
         <h2>ผลคะแนน</h2>
         <h1>${score} / ${total} คะแนน (${percent}%)</h1>
         <h2>${passed ? "ผ่านเกณฑ์" : "ยังไม่ผ่านเกณฑ์"}</h2>
         <p>ระบบได้ส่งข้อมูลไปบันทึกใน Google Sheet แล้ว</p>
-    
+
         <button class="btn-primary" onclick="retryQuiz()">ทำข้อสอบใหม่</button>
         <button class="btn-secondary" onclick="editInfo()">แก้ไขข้อมูลผู้ทำ</button>
       `;
-    
+
       result.innerHTML = html;
       result.scrollIntoView({ behavior: "smooth" });
     }
@@ -470,6 +493,9 @@
     function retryQuiz() {
       document.getElementById("resultSection").classList.add("hidden");
       document.getElementById("quizSection").classList.remove("hidden");
+
+      restoreAnswers(lastAnswers);
+
       document.getElementById("quizSection").scrollIntoView({ behavior: "smooth" });
     }
 

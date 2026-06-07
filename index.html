@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>แบบทดสอบหลังอบรม</title>
+
+  <style>
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: #f4f7fb;
+      color: #1f2937;
+      margin: 0;
+      padding: 24px;
+      line-height: 1.6;
+    }
+
+    .container {
+      max-width: 920px;
+      margin: auto;
+    }
+
+    .card {
+      background: #ffffff;
+      border-radius: 18px;
+      padding: 24px;
+      margin-bottom: 20px;
+      box-shadow: 0 8px 24px rgba(15, 23, 42, 0.08);
+    }
+
+    h1, h2, h3 {
+      margin-top: 0;
+      color: #0f172a;
+    }
+
+    label {
+      display: block;
+      font-weight: 650;
+      margin-top: 14px;
+      margin-bottom: 6px;
+    }
+
+    input[type="text"],
+    select {
+      width: 100%;
+      padding: 12px 14px;
+      border: 1px solid #cbd5e1;
+      border-radius: 12px;
+      font-size: 16px;
+      box-sizing: border-box;
+      background: #fff;
+    }
+
+    .option {
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+      padding: 10px 12px;
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      margin: 8px 0;
+      background: #f8fafc;
+      cursor: pointer;
+    }
+
+    .option:hover {
+      background: #eef6ff;
+    }
+
+    .question {
+      border-top: 1px solid #e5e7eb;
+      padding-top: 20px;
+      margin-top: 22px;
+    }
+
+    button {
+      border: 0;
+      border-radius: 14px;
+      padding: 12px 18px;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+      margin-top: 18px;
+    }
+
+    .btn-primary {
+      background: #2563eb;
+      color: white;
+    }
+
+    .btn-secondary {
+      background: #e2e8f0;
+      color: #0f172a;
+      margin-left: 8px;
+    }
+
+    .btn-success {
+      background: #16a34a;
+      color: white;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .info-box {
+      background: #eff6ff;
+      border-left: 5px solid #2563eb;
+      padding: 14px;
+      border-radius: 12px;
+      margin-bottom: 18px;
+    }
+
+    .result-pass {
+      background: #dcfce7;
+      color: #166534;
+      border-left: 6px solid #16a34a;
+    }
+
+    .result-fail {
+      background: #fee2e2;
+      color: #991b1b;
+      border-left: 6px solid #dc2626;
+    }
+
+    .feedback-item {
+      padding: 10px 12px;
+      border-radius: 12px;
+      margin: 8px 0;
+      background: #f8fafc;
+    }
+
+    .correct {
+      border-left: 5px solid #16a34a;
+    }
+
+    .wrong {
+      border-left: 5px solid #dc2626;
+    }
+
+    .small {
+      font-size: 14px;
+      color: #64748b;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+
+    <div class="card">
+      <h1>แบบทดสอบหลังอบรม</h1>
+      <p>
+        เรื่อง ปัญหาการนำยาไปใช้ในทางที่ผิด ยาไม่มีทะเบียน ยาปลอม และแนวทางการเฝ้าระวังปัญหาคุณภาพยา
+      </p>
+      <p class="small">เกณฑ์ผ่าน 70% หรืออย่างน้อย 5 จาก 7 คะแนน</p>
+    </div>
+
+    <div id="step1" class="card">
+      <h2>Step 1: ข้อมูลผู้ทำแบบทดสอบ</h2>
+
+      <label>ชื่อ นามสกุล <span style="color:red">*</span></label>
+      <input id="fullName" type="text" list="nameList" placeholder="พิมพ์ชื่อเพื่อค้นหา" />
+      <datalist id="nameList"></datalist>
+
+      <label>เลขใบประกอบวิชาชีพเภสัชกรรม</label>
+      <input id="licenseNo" type="text" placeholder="ไม่บังคับ" />
+
+      <label>หน่วยงานที่ท่านสังกัดอยู่</label>
+      <select id="organization">
+        <option value="">-- เลือกหน่วยงาน --</option>
+        <option>โรงพยาบาลส่งเสริมสุขภาพตำบล</option>
+        <option>โรงพยาบาลชุมชน</option>
+        <option>โรงพยาบาลทั่วไป</option>
+        <option>โรงพยาบาลศูนย์</option>
+        <option>สำนักงานสาธารณสุขจังหวัด</option>
+        <option>สำนักงานสาธารณสุขอำเภอ</option>
+        <option>ศูนย์วิทยาศาสตร์การแพทย์</option>
+        <option>สำนักงานคณะกรรมการอาหารและยา</option>
+        <option>กองบัญชาการตำรวจสอบสวนกลาง</option>
+      </select>
+
+      <label>
+        ท่านเป็นผู้มีอำนาจเป็นเจ้าหน้าที่ตาม พรบ.ยา พ.ศ.2510 มาตรา 91
+        จากการแต่งตั้งพนักงานเจ้าหน้าที่เพื่อปฏิบัติการ
+        ดังประกาศกระทรวงสาธารณสุข พ.ศ.2568 หรือไม่
+      </label>
+      <label class="option">
+        <input type="radio" name="isAuthority" value="ใช่" />
+        ใช่
+      </label>
+      <label class="option">
+        <input type="radio" name="isAuthority" value="ไม่ใช่" />
+        ไม่ใช่
+      </label>
+
+      <label>
+        ข้อใดเป็นอำนาจในการปฏิบัติการที่ท่านปฏิบัติได้
+        ตามพระราชบัญญัติยา พ.ศ. 2510 (ตอบได้มากกว่า 1 ข้อ)
+      </label>
+
+      <div id="authorityPowers"></div>
+
+      <button class="btn-primary" onclick="startQuiz()">เริ่มทำข้อสอบ</button>
+    </div>
+
+    <div id="quizSection" class="card hidden">
+      <h2>Step 2: แบบทดสอบ</h2>
+      <div id="infoSummary" class="info-box"></div>
+      <form id="quizForm"></form>
+
+      <button class="btn-success" onclick="submitQuiz()" type="button">ส่งคำตอบ</button>
+    </div>
+
+    <div id="resultSection" class="card hidden"></div>
+
+  </div>
+
+  <iframe name="hidden_iframe" style="display:none;"></iframe>
+
+  <script>
+    const GAS_URL = "https://script.google.com/macros/s/AKfycbyWqCO2_s5C7ZeTqcw7dZ1MN7J4KQF11N4uLe4-bHqK9HDXhRl96ajG35Y0WHp0441uUA/exec";
+
+    const AUTHORITY_POWERS = [
+      "เข้าไปในสถานที่ผลิตยา สถานที่ขายยา สถานที่นำหรือสั่งยาเข้ามาในราชอาณาจักร หรือสถานที่เก็บยา ในระหว่างเวลาทำการเพื่อตรวจสอบและควบคุม",
+      "นำยาในปริมาณพอสมควรไปเป็นตัวอย่างเพื่อตรวจสอบหรือวิเคราะห์",
+      "ยึด หรืออายัด ยาและเครื่องมือที่ใช้ในการกระทำความผิด ตลอดจนภาชนะหรือหีบห่อบรรจุยาและเอกสารที่เกี่ยวข้องกับยาดังกล่าว",
+      "ประกาศผลการตรวจสอบหรือวิเคราะห์คุณภาพของยา ที่นำไปตรวจสอบหรือวิเคราะห์ ให้ประชาชนทราบ โดยได้รับความเห็นชอบจากกรรมการ",
+      "อำนาจเรียกเก็บหรือสั่งให้ผู้รับอนุญาตจัดเก็บยาคืนภายในระยะเวลาที่พนักงานเจ้าหน้าที่กำหนด และมีอำนาจทำลายยา"
+    ];
+
+    const QUESTIONS = [
+      {
+        id: "q1",
+        text: "หน่วยงานที่มีส่วนเกี่ยวข้องเพื่อให้การเฝ้าระวังและระบบติดตามปัญหาการนำยาไปใช้ในทางที่ผิด ยาไม่มีทะเบียน ยาปลอม เป็นไปได้อย่างมีประสิทธิภาพ",
+        options: [
+          "โรงพยาบาล",
+          "สำนักงานคณะกรรมการอาหารและยา",
+          "สำนักงานสาธารณสุข",
+          "ตำรวจ",
+          "ศูนย์วิทยาศาสตร์การแพทย์",
+          "อาสาสมัครสาธารณสุขประจำหมู่บ้าน",
+          "ทุกหน่วยที่กล่าวมา ควรสร้างเครือข่ายการประสานงานและสื่อสารข้อมูล เพื่อให้การเฝ้าระวังและระบบติดตามเป็นไปได้อย่างมีประสิทธิภาพ"
+        ],
+        answer: "ทุกหน่วยที่กล่าวมา ควรสร้างเครือข่ายการประสานงานและสื่อสารข้อมูล เพื่อให้การเฝ้าระวังและระบบติดตามเป็นไปได้อย่างมีประสิทธิภาพ"
+      },
+      {
+        id: "q2",
+        text: "ในการปฏิบัติงานเฝ้าระวังเชิงรุกและใช้เทคโนโลยีในการตรวจผลิตภัณฑ์ที่ปลอมปนสเตียรอยด์ ยาไม่มีทะเบียน ยาปลอม เป็นการปฏิบัติงานตามหัวข้อใดใน WHO GSMS",
+        options: [
+          "การตรวจหา (Detection)",
+          "การตอบสนอง (Response)",
+          "การป้องกัน (Prevention)"
+        ],
+        answer: "การตรวจหา (Detection)"
+      },
+      {
+        id: "q3",
+        text: "ในการปฏิบัติงานหลังจากที่ตรวจพบปัญหา ร่วมกับการประสานงานกับหน่วยงานที่เกี่ยวข้อง เพื่อให้การจัดการปัญหาดังกล่าวมีประสิทธิภาพสูงสุด เป็นการปฏิบัติงานตามหัวข้อใดใน WHO GSMS",
+        options: [
+          "การตรวจหา (Detection)",
+          "การตอบสนอง (Response)",
+          "การป้องกัน (Prevention)"
+        ],
+        answer: "การตอบสนอง (Response)"
+      },
+      {
+        id: "q4",
+        text: "ในการปฏิบัติงานสร้างความตระหนัก และเพิ่มการเข้าถึงยาคุณภาพ เป็นการปฏิบัติงานตามหัวข้อใดใน WHO GSMS",
+        options: [
+          "การตรวจหา (Detection)",
+          "การตอบสนอง (Response)",
+          "การป้องกัน (Prevention)"
+        ],
+        answer: "การป้องกัน (Prevention)"
+      },
+      {
+        id: "q5",
+        text: "ข้อใดไม่ใช่แนวทางการดำเนินการตามกรอบ WHO GSMS ในหัวข้อ การตรวจหา (Detection)",
+        options: [
+          "การจัดทำแผนเฝ้าระวังผลิตภัณฑ์และสถานที่ที่มีความเสี่ยง",
+          "การลงตรวจสถานที่บริเวณชายแดน สถานที่ที่ได้รับอนุญาต และสถานที่ที่ไม่ได้รับอนุญาต",
+          "การส่งต่อการแจ้งเตือนเรียกคืนผลิตภัณฑ์ให้กับหน่วยงานที่เกี่ยวข้อง",
+          "สร้างเครือข่ายแลกเปลี่ยนข้อมูลอาการไม่พึงประสงค์ที่อาจเกิดจากการใช้ผลิตภัณฑ์ที่ปลอมปนสเตียรอยด์"
+        ],
+        answer: "การส่งต่อการแจ้งเตือนเรียกคืนผลิตภัณฑ์ให้กับหน่วยงานที่เกี่ยวข้อง"
+      },
+      {
+        id: "q6",
+        text: "ข้อใดไม่ใช่แนวทางการดำเนินการตามกรอบ WHO GSMS ในหัวข้อ การตอบสนอง (Response)",
+        options: [
+          "การสืบหาแหล่งที่มาของสมุนไพรที่ปลอมปนสเตียรอยด์ร่วมกับหน่วยงานที่เกี่ยวข้อง",
+          "การใช้ข้อมูลที่กำหนดการดำเนินงานและนโยบายในการจัดการปัญหาสเตียรอยด์ปลอมปน",
+          "การบังคับใช้กฎหมายตามอำนาจในการจัดการปัญหา",
+          "การเพิ่มการเข้าถึงการรักษาที่มีคุณภาพมาตรฐานแก่ประชาชน เพื่อป้องกันการไปซื้อยาจากแหล่งที่ไม่น่าเชื่อถือ"
+        ],
+        answer: "การเพิ่มการเข้าถึงการรักษาที่มีคุณภาพมาตรฐานแก่ประชาชน เพื่อป้องกันการไปซื้อยาจากแหล่งที่ไม่น่าเชื่อถือ"
+      },
+      {
+        id: "q7",
+        text: "ข้อใดไม่ใช่แนวทางการดำเนินการตามกรอบ WHO GSMS ในหัวข้อ การป้องกัน (Prevention)",
+        options: [
+          "การให้ความรู้และสร้างความตระหนักของอาการไม่พึงประสงค์จากการใช้สเตียรอยด์ให้แก่ประชาชน",
+          "การควบคุมการพบปัญหาสเตียรอยด์ปลอมปนตลอดห่วงโซ่การกระจายยา",
+          "การสื่อสารส่งต่อข้อมูลระหว่างกันของหลายภาคส่วน เพื่อกำกับดูแลปัญหาสเตียรอยด์ปลอมปนในยาสมุนไพร",
+          "การตรวจสอบบัญชีการซื้อ-ขายยาของร้านขายยาในพื้นที่"
+        ],
+        answer: "การตรวจสอบบัญชีการซื้อ-ขายยาของร้านขายยาในพื้นที่"
+      }
+    ];
+
+    document.addEventListener("DOMContentLoaded", () => {
+      renderAuthorityPowers();
+      renderQuestions();
+      loadNamesFromSheet();
+    });
+
+    function renderAuthorityPowers() {
+      const box = document.getElementById("authorityPowers");
+      box.innerHTML = "";
+
+      AUTHORITY_POWERS.forEach((text, index) => {
+        const label = document.createElement("label");
+        label.className = "option";
+        label.innerHTML = `
+          <input type="checkbox" name="authorityPower" value="${escapeHtml(text)}" />
+          <span>${escapeHtml(text)}</span>
+        `;
+        box.appendChild(label);
+      });
+    }
+
+    function renderQuestions() {
+      const form = document.getElementById("quizForm");
+      form.innerHTML = "";
+
+      QUESTIONS.forEach((q, index) => {
+        const div = document.createElement("div");
+        div.className = "question";
+
+        let html = `<h3>ข้อ ${index + 1}</h3><p>${escapeHtml(q.text)}</p>`;
+
+        q.options.forEach(opt => {
+          html += `
+            <label class="option">
+              <input type="radio" name="${q.id}" value="${escapeHtml(opt)}" />
+              <span>${escapeHtml(opt)}</span>
+            </label>
+          `;
+        });
+
+        div.innerHTML = html;
+        form.appendChild(div);
+      });
+    }
+
+    function startQuiz() {
+      const fullName = document.getElementById("fullName").value.trim();
+      const licenseNo = document.getElementById("licenseNo").value.trim();
+      const organization = document.getElementById("organization").value.trim();
+      const isAuthority = getRadioValue("isAuthority");
+      const powers = getCheckedValues("authorityPower");
+
+      if (!fullName) {
+        alert("กรุณากรอกชื่อ นามสกุล");
+        return;
+      }
+
+      if (!isAuthority) {
+        alert("กรุณาเลือกว่าท่านเป็นผู้มีอำนาจตามมาตรา 91 หรือไม่");
+        return;
+      }
+
+      document.getElementById("infoSummary").innerHTML = `
+        <strong>ข้อมูลผู้ทำแบบทดสอบ</strong><br>
+        ชื่อ: ${escapeHtml(fullName)}<br>
+        เลขใบประกอบวิชาชีพ: ${licenseNo ? escapeHtml(licenseNo) : "-"}<br>
+        หน่วยงาน: ${organization ? escapeHtml(organization) : "-"}<br>
+        ผู้มีอำนาจตามมาตรา 91: ${escapeHtml(isAuthority)}<br>
+        อำนาจที่เลือก: ${powers.length ? escapeHtml(powers.join(", ")) : "-"}
+      `;
+
+      document.getElementById("quizSection").classList.remove("hidden");
+      document.getElementById("step1").classList.add("hidden");
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    function submitQuiz() {
+      const answers = {};
+      let missing = [];
+
+      QUESTIONS.forEach((q, index) => {
+        const value = getRadioValue(q.id);
+        if (!value) {
+          missing.push(index + 1);
+        } else {
+          answers[q.id] = value;
+        }
+      });
+
+      if (missing.length > 0) {
+        alert("กรุณาตอบคำถามข้อ " + missing.join(", "));
+        return;
+      }
+
+      let score = 0;
+      QUESTIONS.forEach(q => {
+        if (answers[q.id] === q.answer) score++;
+      });
+
+      const total = QUESTIONS.length;
+      const percent = Math.round((score / total) * 10000) / 100;
+      const passed = percent >= 70;
+
+      showResult(score, total, percent, passed, answers);
+
+      const payload = {
+        fullName: document.getElementById("fullName").value.trim(),
+        licenseNo: document.getElementById("licenseNo").value.trim(),
+        organization: document.getElementById("organization").value.trim(),
+        isAuthority: getRadioValue("isAuthority"),
+        authorityPowers: getCheckedValues("authorityPower"),
+        answers: answers
+      };
+
+      postToAppsScript(payload);
+    }
+
+    function showResult(score, total, percent, passed, answers) {
+      const result = document.getElementById("resultSection");
+      result.classList.remove("hidden");
+      result.className = "card " + (passed ? "result-pass" : "result-fail");
+
+      let html = `
+        <h2>ผลคะแนน</h2>
+        <h1>${score} / ${total} คะแนน (${percent}%)</h1>
+        <h2>${passed ? "ผ่านเกณฑ์" : "ยังไม่ผ่านเกณฑ์"}</h2>
+        <p>ระบบได้ส่งข้อมูลไปบันทึกใน Google Sheet แล้ว</p>
+        <h3>ตรวจคำตอบ</h3>
+      `;
+
+      QUESTIONS.forEach((q, index) => {
+        const isCorrect = answers[q.id] === q.answer;
+        html += `
+          <div class="feedback-item ${isCorrect ? "correct" : "wrong"}">
+            <strong>ข้อ ${index + 1}: ${isCorrect ? "ถูก" : "ผิด"}</strong><br>
+            คำตอบของท่าน: ${escapeHtml(answers[q.id])}<br>
+            ${isCorrect ? "" : "คำตอบที่ถูกต้อง: " + escapeHtml(q.answer)}
+          </div>
+        `;
+      });
+
+      html += `
+        <button class="btn-primary" onclick="retryQuiz()">ทำข้อสอบใหม่</button>
+        <button class="btn-secondary" onclick="editInfo()">แก้ไขข้อมูลผู้ทำ</button>
+      `;
+
+      result.innerHTML = html;
+      result.scrollIntoView({ behavior: "smooth" });
+    }
+
+    function retryQuiz() {
+      QUESTIONS.forEach(q => {
+        document.querySelectorAll(`input[name="${q.id}"]`).forEach(el => {
+          el.checked = false;
+        });
+      });
+
+      document.getElementById("resultSection").classList.add("hidden");
+      document.getElementById("quizSection").scrollIntoView({ behavior: "smooth" });
+    }
+
+    function editInfo() {
+      document.getElementById("step1").classList.remove("hidden");
+      document.getElementById("quizSection").classList.add("hidden");
+      document.getElementById("resultSection").classList.add("hidden");
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    function postToAppsScript(payload) {
+      const form = document.createElement("form");
+      form.method = "POST";
+      form.action = GAS_URL;
+      form.target = "hidden_iframe";
+      form.style.display = "none";
+
+      const input = document.createElement("input");
+      input.type = "hidden";
+      input.name = "payload";
+      input.value = JSON.stringify(payload);
+
+      form.appendChild(input);
+      document.body.appendChild(form);
+      form.submit();
+
+      setTimeout(() => form.remove(), 1000);
+    }
+
+    function loadNamesFromSheet() {
+      if (!GAS_URL || GAS_URL.includes("PUT_YOUR")) return;
+
+      const callbackName = "callback_" + Date.now();
+
+      window[callbackName] = function(data) {
+        if (data && data.ok && Array.isArray(data.names)) {
+          const list = document.getElementById("nameList");
+          list.innerHTML = "";
+          data.names.forEach(name => {
+            const opt = document.createElement("option");
+            opt.value = name;
+            list.appendChild(opt);
+          });
+        }
+        delete window[callbackName];
+        script.remove();
+      };
+
+      const script = document.createElement("script");
+      script.src = `${GAS_URL}?action=names&callback=${callbackName}`;
+      document.body.appendChild(script);
+    }
+
+    function getRadioValue(name) {
+      const el = document.querySelector(`input[name="${name}"]:checked`);
+      return el ? el.value : "";
+    }
+
+    function getCheckedValues(name) {
+      return Array.from(document.querySelectorAll(`input[name="${name}"]:checked`))
+        .map(el => el.value);
+    }
+
+    function escapeHtml(text) {
+      return String(text || "")
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+    }
+  </script>
+</body>
+</html>
